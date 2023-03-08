@@ -20,7 +20,7 @@ function gameState() {
     let winner = gameWinner();
 
     return {
-        table,
+        table: table.slice(),
         currentTurn: winner === undefined? currentTurn : null,
         winner
     }
@@ -91,13 +91,10 @@ function evalTable() {
 }
 
 function gameWinner() {
-    if(moveCount >= 9)
-        return null;
-
     let evaluation = evalTable();
 
     if(evaluation == 0)
-        return undefined;
+        return moveCount >= 9 ? null : undefined;
     
     return evaluation > 0? 'cross' : 'circle';
 }
