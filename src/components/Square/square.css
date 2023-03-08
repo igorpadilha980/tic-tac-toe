@@ -1,0 +1,12 @@
+.square {
+    width: 33%;
+    height: 33%;
+
+    padding: 5px;
+
+    display: inline-flex;
+    vertical-align: top;
+
+    border: 1px solid gray;
+    background-color: lightgoldenrodyellow;
+}

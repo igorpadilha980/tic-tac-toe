@@ -1,10 +1,16 @@
 import Piece from "./components/Piece"
+import Square from "./components/Square"
 
 function App() {
   return (
     <>
-      <Piece type="circle" />
-      <Piece type="cross" />
+      <Square>
+        <Piece type="circle" />
+      </Square>
+      <Square>
+        <Piece type="cross" />
+      </Square>
+      <Square />
     </>
   )
 }
