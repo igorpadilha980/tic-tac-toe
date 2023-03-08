@@ -1,18 +1,13 @@
-import Piece from "./components/Piece"
-import Square from "./components/Square"
+import Board from "./components/Board"
 
 function App() {
-  return (
-    <>
-      <Square>
-        <Piece type="circle" />
-      </Square>
-      <Square>
-        <Piece type="cross" />
-      </Square>
-      <Square />
-    </>
-  )
+  const tiles = [
+    [null, null, null],
+    [null, 'cross', null],
+    [null, null, 'circle']
+  ];
+
+  return <Board tiles={tiles}/>
 }
 
 export default App
