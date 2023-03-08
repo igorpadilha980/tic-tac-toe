@@ -1,7 +1,7 @@
 import './square.css';
 
-function Square({ children }) {
-    return <div className="square">{ children }</div>
+function Square({ children, onClick }) {
+    return <div className="square" onClick={onClick}>{ children }</div>
 }
 
 export default Square;
