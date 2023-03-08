@@ -1,5 +1,6 @@
 let table = null;
 let currentTurn = null;
+let moveCount = 0;
 
 const SUCCESS_STATUS = 'ok';
 const ERROR_STATUS = 'error';
@@ -12,13 +13,16 @@ function resetTable() {
 function resetGame() {
     resetTable();
     currentTurn = 'cross';
+    moveCount = 0;
 }
 
 function gameState() {
+    let winner = gameWinner();
+
     return {
         table,
-        currentTurn,
-        winner: gameWinner()
+        currentTurn: winner === undefined? currentTurn : null,
+        winner
     }
 }
 
@@ -44,10 +48,14 @@ function switchTurn() {
 }
 
 function makeMove(x, y) {
+    moveCount++;
     table[y][x] = currentTurn;
 }
 
 function isLegalMove(x, y) {
+    if(x < 0 || x > 2 || y < 0 || y > 2)
+        return false;
+
     return table[y][x] === null && gameWinner() === undefined;
 }
 
@@ -83,6 +91,9 @@ function evalTable() {
 }
 
 function gameWinner() {
+    if(moveCount >= 9)
+        return null;
+
     let evaluation = evalTable();
 
     if(evaluation == 0)

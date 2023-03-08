@@ -56,6 +56,7 @@ describe("Game service", () => {
         
         expect(response.status).toBe(SUCCESS_STATUS);
         expect(response.gameState.winner).toBe('cross');
+        expect(response.gameState.currentTurn).toBe(null);
     })
 
     test('should fail to attempt any make move after game is finished', () => {
@@ -66,5 +67,31 @@ describe("Game service", () => {
         move(2, 2);
 
         expect(move(0, 2).status).toBe(ERROR_STATUS);
+    })
+
+    test('should failt to make a move out of table bounds', () => {
+        expect(move(3, 3).status).toBe(ERROR_STATUS);
+        expect(move(-3, -3).status).toBe(ERROR_STATUS);
+        expect(move(3, -3).status).toBe(ERROR_STATUS);
+    })
+
+    test('should stop the game in case of tie', () => {
+        
+        move(1, 1);
+        move(0, 0);
+        
+        move(0, 2);
+        move(2, 0);
+
+        move(1, 0);
+        move(1, 2);
+
+        move(0, 1);
+        move(2, 1);
+
+        let response = move(2, 2);
+
+        expect(response.gameState.currentTurn).toBe(null);
+        expect(response.gameState.winner).toBe(null);
     })
 })
