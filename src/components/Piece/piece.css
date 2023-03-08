@@ -1,0 +1,9 @@
+.piece {
+    height: 20vh;
+    width: 20vh;
+
+    display: inline-block;
+
+    object-fit: contain;
+    object-position: center;
+}
