@@ -17,7 +17,8 @@ function resetGame() {
 function gameState() {
     return {
         table,
-        currentTurn
+        currentTurn,
+        winner: gameWinner()
     }
 }
 
@@ -47,7 +48,47 @@ function makeMove(x, y) {
 }
 
 function isLegalMove(x, y) {
-    return table[y][x] === null;
+    return table[y][x] === null && gameWinner() === undefined;
+}
+
+function evalTable() {
+    let v = [ 0, 0, 0 ];
+    let h = [ 0, 0, 0 ];
+    let d = [ 0, 0 ];
+
+    const evalSquare = (x, y) => {
+        if(table[y][x] == null)
+            return 0;
+
+        return table[y][x] == 'cross'? 1 : -1;
+    }
+
+    for(let y = 0; y < 3; y++)
+        for(let x = 0; x < 3; x++) {
+            h[x] += evalSquare(x, y);
+            v[x] += evalSquare(y, x);
+            
+            if(x == y) {
+                d[0] += evalSquare(x, y);
+                d[1] += evalSquare(2 - x, y);
+            }
+        }
+
+    let tableEvaluations = [...v, ...h, ...d].filter(evaluation => Math.abs(evaluation) == 3);
+
+    if(tableEvaluations.length == 0)
+        return 0;
+
+    return tableEvaluations[0] / 3;
+}
+
+function gameWinner() {
+    let evaluation = evalTable();
+
+    if(evaluation == 0)
+        return undefined;
+    
+    return evaluation > 0? 'cross' : 'circle';
 }
 
 function move(x, y) {

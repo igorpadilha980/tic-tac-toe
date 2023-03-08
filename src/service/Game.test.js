@@ -45,4 +45,26 @@ describe("Game service", () => {
         move(0, 0);
         expect(move(0, 0).status).toBe(ERROR_STATUS);
     })
+
+    test('should detect when game is finished, returning winner', () => {
+        move(0, 0);
+        move(0, 1);
+        move(1, 0);
+        move(1, 1);
+
+        const response = move(2, 0);
+        
+        expect(response.status).toBe(SUCCESS_STATUS);
+        expect(response.gameState.winner).toBe('cross');
+    })
+
+    test('should fail to attempt any make move after game is finished', () => {
+        move(0, 0);
+        move(0, 1);
+        move(1, 1);
+        move(2, 1);
+        move(2, 2);
+
+        expect(move(0, 2).status).toBe(ERROR_STATUS);
+    })
 })
